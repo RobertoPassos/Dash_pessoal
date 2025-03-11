@@ -1,5 +1,27 @@
 import streamlit as st
 import pandas as pd
+import boto3
+from pyathena import connect
+
+athena_client = boto3.client(
+    "athena",
+    aws_access_key_id=AWS_ACCESS_KEY,
+    aws_secret_access_key=AWS_SECRET_KEY,
+    region_name=AWS_REGION,
+)
+
+conn = connect(
+    aws_access_key_id=AWS_ACCESS_KEY,
+    aws_secret_access_key=AWS_SECRET_KEY,
+    s3_staging_dir=S3_STAGING_DIR,
+    region_name=AWS_REGION,
+)
+
+query = "select * from gold.fact_order_item limit 5"
+df = pd.read_sql(query, conn)
+
+
+
 
 st.set_page_config(page_title="Monitoramento de Preços", layout="wide")
 st.title("📊 Monitoramento de Preço - Hubii")
@@ -21,4 +43,5 @@ with tab1:
 with tab2:
     st.subheader("📊 Beleza em Casa iFood - Monitoramento de Preços")
     st.write("### 📄 Comparação de Preços")
+    st.dataframe(df)
     st.write("O Price Index calculado na tabela acima é o comparativo do valor praticano no ifood com a tabela de referência fornecida pelo Boticário.")
