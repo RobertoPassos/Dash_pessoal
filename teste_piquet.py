@@ -3,7 +3,10 @@ import pandas as pd
 import boto3
 from pyathena import connect
 
-st.secrets()
+AWS_ACCESS_KEY = st.secrets["AWS_ACCESS_KEY"]
+AWS_SECRET_KEY = st.secrets["AWS_SECRET_KEY"]
+AWS_REGION = st.secrets["AWS_REGION"]
+
 
 athena_client = boto3.client(
     "athena",
