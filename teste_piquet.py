@@ -6,6 +6,7 @@ from pyathena import connect
 AWS_ACCESS_KEY = st.secrets["AWS_ACCESS_KEY"]
 AWS_SECRET_KEY = st.secrets["AWS_SECRET_KEY"]
 AWS_REGION = st.secrets["AWS_REGION"]
+S3_STAGING_DIR = st.secrets["S3_STAGING_DIR"]
 
 
 athena_client = boto3.client(
